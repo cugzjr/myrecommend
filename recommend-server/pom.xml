@@ -44,6 +44,7 @@
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>1.9.6</version>
         </dependency>
+        
         <!-- neo4j 依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
