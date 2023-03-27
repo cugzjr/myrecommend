@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -62,4 +63,13 @@ public class recommendtest {
         if(user1 != null) System.out.println(1);
         else System.out.println(0);
     }
+
+    @Test
+    public void focus(){
+        List<User> userList = userRespository.getAllFollowers(11);
+        for(User user:userList){
+            System.out.print(user.getName());
+        }
+    }
+
 }
