@@ -5,6 +5,11 @@ import io.swagger.models.auth.In;
 
 import java.util.List;
 
+/**
+ * 用户相关操作接口
+ * @Author: 朱佳睿
+ * @Time: 2023.03.29
+ */
 public interface UserService {
 
     RespBean register(Integer userId, String name);  //注册

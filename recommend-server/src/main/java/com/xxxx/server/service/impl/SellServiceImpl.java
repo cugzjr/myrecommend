@@ -12,6 +12,11 @@ import com.xxxx.server.service.SellService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * 出售商品接口实现
+ * @Author: 朱佳睿
+ * @Time: 2023.03.29
+ */
 @Service
 public class SellServiceImpl implements SellService {
     @Autowired
@@ -21,6 +26,13 @@ public class SellServiceImpl implements SellService {
     @Autowired
     private UserRespository userRespository;
 
+    /**
+     * 出售商品
+     * @param productParam
+     * @return RespBean
+     * @Author: 朱佳睿
+     * @Time: 2023.03.29
+     */
     @Override
     public RespBean sellProduct(ProductParam productParam)
     {

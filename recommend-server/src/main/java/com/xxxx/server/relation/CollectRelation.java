@@ -6,6 +6,11 @@ import lombok.Builder;
 import lombok.Data;
 import org.neo4j.ogm.annotation.*;
 
+/**
+ * 收藏关系
+ * @Author: 朱佳睿
+ * @Time: 2023.03.29
+ */
 @Data
 @RelationshipEntity(type = "收藏")
 @Builder
@@ -14,9 +19,9 @@ public class CollectRelation {
     @GeneratedValue
     private Long id;
     @StartNode
-    private User user;
+    private User user;         //用户
     @EndNode
-    private Product product;
+    private Product product;  //收藏的商品
     @Property
-    private String relation;
+    private String relation;  //关系名
 }

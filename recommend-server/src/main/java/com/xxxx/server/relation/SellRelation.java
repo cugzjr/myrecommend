@@ -6,6 +6,11 @@ import lombok.Builder;
 import lombok.Data;
 import org.neo4j.ogm.annotation.*;
 
+/**
+ * 出售关系
+ * @Author: 朱佳睿
+ * @Time: 2023.03.29
+ */
 @Data
 @RelationshipEntity(type = "出售")
 @Builder

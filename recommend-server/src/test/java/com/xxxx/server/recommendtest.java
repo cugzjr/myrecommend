@@ -13,6 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
+/**
+ * 图数据库操作测试
+ * @Author: 朱佳睿
+ * @Time: 2023.03.28
+ */
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class recommendtest {
@@ -25,11 +30,22 @@ public class recommendtest {
     @Autowired
     ProductRespository productRespository;
 
+    /**
+     * 创建实体
+     * @Author: 朱佳睿
+     * @Time: 2023.03.28
+     */
     @Test
     public void createPojo(){
         Product product = productRespository.findByProductId(4);
         System.out.print(product.getName());
     }
+
+    /**
+     * 创建关系
+     * @Author: 朱佳睿
+     * @Time: 2023.03.28
+     */
     @Test
     public void createRelation(){
         User user = new User();
@@ -44,17 +60,11 @@ public class recommendtest {
         buyRespository.save(buyRelation);
     }
 
-    @Test
-    public void createNew(){
-        User user = userRespository.findByUserId(2);
-        Product product = new Product();
-        product.setProductId(4);
-        product.setName("电脑");
-        productRespository.save(product);
-        BuyRelation buyRelation = BuyRelation.builder().user(user).product(product).relation("购买").build();
-        buyRespository.save(buyRelation);
-    }
-
+    /**
+     * 更新节点
+     * @Author: 朱佳睿
+     * @Time: 2023.03.28
+     */
     @Test
     public void update(){
         User user = userRespository.findByUserId(2);
@@ -64,6 +74,11 @@ public class recommendtest {
         else System.out.println(0);
     }
 
+    /**
+     * 获取关注数
+     * @Author: 朱佳睿
+     * @Time: 2023.03.28
+     */
     @Test
     public void focus(){
         List<User> userList = userRespository.getAllFollowers(11);

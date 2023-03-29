@@ -11,6 +11,11 @@ import com.xxxx.server.service.BuyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * 购买商品接口实现
+ * @Author: 朱佳睿
+ * @Time: 2023.03.29
+ */
 @Service
 public class BuyServiceImpl implements BuyService {
     @Autowired
@@ -20,6 +25,14 @@ public class BuyServiceImpl implements BuyService {
     @Autowired
     private BuyRespository buyRespository;
 
+    /**
+     * 购买商品
+     * @param userId
+     * @param productId
+     * @return RespBean
+     * @Author: 朱佳睿
+     * @Time: 2023.03.29
+     */
     @Override
     public RespBean buyProduct(Integer userId, Integer productId)
     {

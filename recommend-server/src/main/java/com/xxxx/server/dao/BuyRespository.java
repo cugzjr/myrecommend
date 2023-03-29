@@ -6,6 +6,11 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
+/**
+ * 购买商品图数据库操作接口
+ * @Author: 朱佳睿
+ * @Time: 2023.03.26
+ */
 @Component
 public interface BuyRespository extends Neo4jRepository<BuyRelation, Long> {
 

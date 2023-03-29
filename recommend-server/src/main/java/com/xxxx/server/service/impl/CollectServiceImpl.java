@@ -11,6 +11,11 @@ import com.xxxx.server.service.CollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * 收藏商品接口实现
+ * @Author: 朱佳睿
+ * @Time: 2023.03.29
+ */
 @Service
 public class CollectServiceImpl implements CollectService {
     @Autowired
@@ -19,6 +24,15 @@ public class CollectServiceImpl implements CollectService {
     private ProductRespository productRespository;
     @Autowired
     private CollectRespository collectRespository;
+
+    /**
+     * 收藏商品
+     * @param userId
+     * @param productId
+     * @return RespBean
+     * @Author: 朱佳睿
+     * @Time: 2023.03.29
+     */
     @Override
     public RespBean collectProduct(Integer userId, Integer productId)
     {

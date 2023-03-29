@@ -9,6 +9,11 @@ import com.xxxx.server.service.FocusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * 关注用户接口实现
+ * @Author: 朱佳睿
+ * @Time: 2023.03.29
+ */
 @Service
 public class FocusServiceImpl implements FocusService {
     @Autowired
@@ -16,6 +21,14 @@ public class FocusServiceImpl implements FocusService {
     @Autowired
     private FocusRespository focusRespository;
 
+    /**
+     * 关注用户
+     * @param startId
+     * @param endId
+     * @return RespBean
+     * @Author: 朱佳睿
+     * @Time: 2023.03.29
+     */
     @Override
     public RespBean focusUser(Integer startId, Integer endId)
     {

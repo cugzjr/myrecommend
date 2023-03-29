@@ -14,8 +14,8 @@ import java.util.List;
 
 /**
  * 收藏接口类
- * @Author:朱佳睿
- * @Time:2023.03.26
+ * @Author: 朱佳睿
+ * @Time: 2023.03.26
  */
 @RestController
 @RequestMapping("/focus")
@@ -29,9 +29,9 @@ public class FocusController {
      * 关注用户接口
      * @param startId
      * @param endId
-     * @return:RespBean
-     * @Author:朱佳睿
-     * @Time:2023.03.26
+     * @return: RespBean
+     * @Author: 朱佳睿
+     * @Time: 2023.03.26
      */
     @ApiOperation(value = "关注用户")
     @PostMapping("/focususer")
@@ -43,9 +43,9 @@ public class FocusController {
     /**
      * 我的关注接口
      * @param userId
-     * @return:List<Integer>
-     * @Author:朱佳睿
-     * @Time:2023.03.26
+     * @return: List<Integer>
+     * @Author: 朱佳睿
+     * @Time: 2023.03.26
      */
     @ApiOperation(value = "我的关注")
     @PostMapping("/myfocus")
@@ -56,9 +56,9 @@ public class FocusController {
     /**
      * 我的关注总数接口
      * @param userId
-     * @return:Integer
-     * @Author:朱佳睿
-     * @Time:2023.03.26
+     * @return: Integer
+     * @Author: 朱佳睿
+     * @Time: 2023.03.26
      */
     @ApiOperation(value = "我的关注数")
     @PostMapping("/myfocusnum")
@@ -71,9 +71,9 @@ public class FocusController {
     /**
      * 我的粉丝接口
      * @param userId
-     * @return:List<Integer>
-     * @Author:朱佳睿
-     * @Time:2023.03.26
+     * @return: List<Integer>
+     * @Author: 朱佳睿
+     * @Time: 2023.03.26
      */
     @ApiOperation(value = "我的粉丝")
     @PostMapping("/myfans")
@@ -84,9 +84,9 @@ public class FocusController {
     /**
      * 我的粉丝数量接口
      * @param userId
-     * @return:Integer
-     * @Author:朱佳睿
-     * @Time:2023.03.26
+     * @return: Integer
+     * @Author: 朱佳睿
+     * @Time: 2023.03.26
      */
     @ApiOperation(value = "我的粉丝数")
     @PostMapping("/myfansnum")
