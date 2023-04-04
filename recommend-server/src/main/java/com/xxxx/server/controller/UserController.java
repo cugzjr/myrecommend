@@ -4,8 +4,12 @@ import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.pojo.User;
 import com.xxxx.server.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import scala.Int;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +56,11 @@ public class UserController {
     /**
      * 推荐感兴趣的人
      * @param userId
-     * @return
-     * @Author: 朱佳睿
-     * @Time: 2023.04.04
+     * @return List<Integer>
      */
     @ApiOperation(value = "推荐感兴趣的人")
     @GetMapping("/recommenduser")
-    public List<Integer> recommenduser(@RequestParam("userId") Integer userId){
-        return userService.recommendUsers(userId);
+    public RespBean recommenduser(@RequestParam("userId") Integer userId){
+        return RespBean.success("响应成功", userService.recommendUsers(userId));
     }
 }

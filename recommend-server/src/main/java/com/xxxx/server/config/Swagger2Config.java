@@ -53,7 +53,7 @@ public class Swagger2Config {
         return new ApiInfoBuilder()
                 .title("推荐系统接口文档")
                 .description("推荐系统接口文档")
-                .version("1.0")
+                .version("1.0.0")
                 .build();
     }
 
