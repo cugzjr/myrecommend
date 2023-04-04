@@ -3,12 +3,9 @@ package com.xxxx.server.service.impl;
 import com.xxxx.server.dao.UserRespository;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.pojo.User;
-import com.xxxx.server.relation.FocusRelation;
 import com.xxxx.server.service.UserService;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.neo4j.graphdb.traversal.TraversalDescription;
 import java.util.ArrayList;
 import java.util.List;
 
