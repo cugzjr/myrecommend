@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 图数据库操作测试
@@ -48,16 +49,13 @@ public class recommendtest {
      */
     @Test
     public void createRelation(){
-        User user = new User();
-        user.setUserId(2);
-        user.setName("朱佳睿");
-        Product product = new Product();
-        product.setProductId(1);
-        product.setName("薯片");
-        userRespository.save(user);
-        productRespository.save(product);
-        BuyRelation buyRelation = BuyRelation.builder().user(user).product(product).relation("购买").build();
-        buyRespository.save(buyRelation);
+        List<User> userList = userRespository.recommendUsers(6, 4);
+        System.out.println(userList.size());
+        for(User user:userList){
+            System.out.print(user.getName());
+            System.out.print("\n");
+        }
+
     }
 
     /**
@@ -86,5 +84,20 @@ public class recommendtest {
             System.out.print(user.getName());
         }
     }
+
+    /**
+     * 推荐感兴趣的人测试
+     * @Author: 朱佳睿
+     * @Time: 2023.04.04
+     */
+    @Test
+    public void recommend(){
+        List<User> userList = userRespository.recommendUsers(6, 4);
+        for(User user:userList){
+            System.out.print(user.getName());
+            System.out.print("\n");
+        }
+    }
+
 
 }

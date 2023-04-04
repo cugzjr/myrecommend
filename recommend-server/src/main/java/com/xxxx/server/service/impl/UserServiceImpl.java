@@ -3,10 +3,12 @@ package com.xxxx.server.service.impl;
 import com.xxxx.server.dao.UserRespository;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.pojo.User;
+import com.xxxx.server.relation.FocusRelation;
 import com.xxxx.server.service.UserService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.neo4j.graphdb.traversal.TraversalDescription;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +87,24 @@ public class UserServiceImpl implements UserService {
     public List<Integer> getAllFollwers(Integer userId)  //获取我的粉丝
     {
         List<User> userList = userRespository.getAllFollowers(userId);
+        List<Integer> res = new ArrayList<>();
+        for(User user:userList) {
+            res.add(user.getUserId());
+        }
+        return res;
+    }
+
+    /**
+     * 推荐感兴趣的人
+     * @param userId
+     * @return
+     * @Author: 朱佳睿
+     * @Time: 2023.04.04
+     */
+    @Override
+    public List<Integer> recommendUsers(Integer userId){
+        Integer limit = 4;  //推荐数量
+        List<User> userList = userRespository.recommendUsers(userId, limit);
         List<Integer> res = new ArrayList<>();
         for(User user:userList) {
             res.add(user.getUserId());

@@ -1,14 +1,13 @@
 package com.xxxx.server.controller;
 
 import com.xxxx.server.pojo.RespBean;
+import com.xxxx.server.pojo.User;
 import com.xxxx.server.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,4 +49,16 @@ public class UserController {
         return userService.changeName(userId, name);
     }
 
+    /**
+     * 推荐感兴趣的人
+     * @param userId
+     * @return
+     * @Author: 朱佳睿
+     * @Time: 2023.04.04
+     */
+    @ApiOperation(value = "推荐感兴趣的人")
+    @GetMapping("/recommenduser")
+    public List<Integer> recommenduser(@RequestParam("userId") Integer userId){
+        return userService.recommendUsers(userId);
+    }
 }
