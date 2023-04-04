@@ -50,19 +50,27 @@ public interface UserRespository extends Neo4jRepository<User, Long> {
             "ORDER BY weightedScore DESC LIMIT $limit")
     List<User> recommendUsers(@Param("userId") Integer userId, @Param("limit") Integer limit);
 
-//    @Query("MATCH (me:User {userId: $userId})\n" +
-//            "WITH me\n" +
-//            "OPTIONAL MATCH (me)-[:关注]->(following)\n" +
-//            "WITH collect(following) as myFollowing, me\n" +
-//            "MATCH (other:User)\n" +
-//            "WHERE other.userId <> $userId\n" +
-//            "WITH other, reduce(s = 0, f in myFollowing | \n" +
-//            "    CASE WHEN (other)-[:关注]->(f) THEN s + 1 ELSE s END\n" +
-//            ") as similarity, size((other)<-[:关注]-()) as followers\n" +
-//            "WHERE NOT (me)-[:关注]->(other)\n" +
-//            "RETURN other, similarity, followers, similarity * 0.9 + followers * 0.1 as weightedScore\n" +
-//            "ORDER BY weightedScore DESC LIMIT $limit")
-//    List<Map<String, Object>> recommend(@Param("userId") Integer userId, @Param("limit") Integer limit);
+    /**
+     * 打印相似度
+     * @param userId
+     * @param limit
+     * @return
+     * @Author: 朱佳睿
+     * @Time: 2023.04.04
+     */
+    @Query("MATCH (me:User {userId: $userId})\n" +
+            "WITH me\n" +
+            "OPTIONAL MATCH (me)-[:关注]->(following)\n" +
+            "WITH collect(following) as myFollowing, me\n" +
+            "MATCH (other:User)\n" +
+            "WHERE other.userId <> $userId\n" +
+            "WITH other, reduce(s = 0, f in myFollowing | \n" +
+            "    CASE WHEN (other)-[:关注]->(f) THEN s + 1 ELSE s END\n" +
+            ") as similarity, size((other)<-[:关注]-()) as followers\n" +
+            "WHERE NOT (me)-[:关注]->(other)\n" +
+            "RETURN other, similarity, followers, similarity * 0.9 + followers * 0.1 as weightedScore\n" +
+            "ORDER BY weightedScore DESC LIMIT $limit")
+    List<Map<String, Object>> recommend(@Param("userId") Integer userId, @Param("limit") Integer limit);
 //
 //    @Query("MATCH (u1:User {userId: $userId1})-[r1:关注]->(u2:User)<-[r2:关注]-(u3:User {userId: $userId2})\n" +
 //            "WITH count(r1) as u1u2, count(r2) as u2u3\n" +

@@ -92,11 +92,21 @@ public class recommendtest {
      */
     @Test
     public void recommend(){
-        List<User> userList = userRespository.recommendUsers(6, 4);
+        List<User> userList = userRespository.recommendUsers(5, 4);
         for(User user:userList){
             System.out.print(user.getName());
             System.out.print("\n");
         }
+    }
+
+    @Test
+    public void getSimilarity(){
+        User user = userRespository.findByUserId(11);
+        System.out.print(user.getName());
+        List<Map<String, Object>> resultList = userRespository.recommend(11, 4);
+        resultList.forEach(result -> {
+            System.out.println("User: " + result.get("other") + ", similarity: " + result.get("similarity") + ", followers: " + result.get("followers") + ", weightedScore: " + result.get("weightedScore"));
+        });
     }
 
 
