@@ -1,18 +1,10 @@
 package com.xxxx.server.controller;
 
 import com.xxxx.server.pojo.RespBean;
-import com.xxxx.server.pojo.User;
 import com.xxxx.server.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import scala.Int;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 用户个人信息接口类
