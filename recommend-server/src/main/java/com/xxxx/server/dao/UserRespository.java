@@ -16,6 +16,8 @@ import java.util.Map;
  * @Time: 2023.03.26
  */
 public interface UserRespository extends Neo4jRepository<User, Long> {
+    @Query("MATCH (n:User) RETURN count(n)")
+    int getAllUserCount();
 
     User findByUserId(Integer userId);  //根据id查找用户
 
@@ -27,6 +29,12 @@ public interface UserRespository extends Neo4jRepository<User, Long> {
 
     @Query("MATCH (u:User)-[r:关注]->(f:User {userId:{0}}) RETURN u")
     List<User> getAllFollowers(Integer userId);   //获取我的粉丝
+
+    @Query("MATCH (u:User)<-[r:关注]-(f:User) WHERE f.userId = $userId RETURN count(r)")
+    int getFollowCount(@Param("userId") Integer userId);    //获取关注数量
+
+    @Query("MATCH (u:User)-[r:关注]->(f:User) WHERE f.userId = $userId RETURN count(r)")
+    int getFollowerCount(@Param("userId") Integer userId);    //获取粉丝数量
 
     /**
      * 推荐感兴趣的人
