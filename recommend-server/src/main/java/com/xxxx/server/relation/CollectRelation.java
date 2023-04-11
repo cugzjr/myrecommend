@@ -19,9 +19,9 @@ public class CollectRelation {
     @GeneratedValue
     private Long id;
     @StartNode
-    private User user;         //用户
+    private User user;
     @EndNode
-    private Product product;  //收藏的商品
+    private Product product;
     @Property
-    private String relation;  //关系名
+    private String relation;
 }

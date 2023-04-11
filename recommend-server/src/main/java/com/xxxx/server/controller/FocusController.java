@@ -64,8 +64,13 @@ public class FocusController {
     @PostMapping("/myfocusnum")
     public Integer getFocusnum(@RequestParam("userId") Integer userId){
         List<Integer> res = userService.getAllFollwings(userId);
-        if(res == null) return 0;
-        else return res.size();
+        if(res == null)
+        {
+            return 0;
+        }
+        else {
+            return res.size();
+        }
     }
 
     /**
@@ -92,7 +97,11 @@ public class FocusController {
     @PostMapping("/myfansnum")
     public Integer getFansnum(@RequestParam("userId") Integer userId){
         List<Integer> res = userService.getAllFollwers(userId);
-        if(res == null) return 0;
-        else return res.size();
+        if(res == null) {
+            return 0;
+        }
+        else {
+            return res.size();
+        }
     }
 }

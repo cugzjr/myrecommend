@@ -16,31 +16,78 @@ import java.util.Map;
  * @Time: 2023.03.26
  */
 public interface UserRespository extends Neo4jRepository<User, Long> {
+    /**
+     * 获取用户总数
+     * @return 用户总数
+     * @Author: 朱佳睿
+     * @Time: 2023.04.11
+     */
     @Query("MATCH (n:User) RETURN count(n)")
     int getAllUserCount();
 
-    User findByUserId(Integer userId);  //根据id查找用户
+    /**
+     * 根据Id用户
+     * @param userId
+     * @return 查找的用户
+     * @Author: 朱佳睿
+     * @Time: 2023.04.11
+     */
+    User findByUserId(Integer userId);
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return 更新后的用户
+     * @Author: 朱佳睿
+     * @Time: 2023.04.11
+     */
     @Query("MATCH (n) WHERE id(n) = :#{#user.Id} SET n.userId = :#{#user.userId},n.name = :#{#user.name} RETURN n")
-    User updateByNode(@Param("user") User user);   //更新用户信息
+    User updateByNode(@Param("user") User user);
 
+    /**
+     * 获取我的关注
+     * @param userId
+     * @return 我的关注列表
+     * @Author: 朱佳睿
+     * @Time: 2023.04.11
+     */
     @Query("MATCH (u:User {userId:{0}})-[:关注]->(f:User) RETURN f")
-    List<User> getAllFollowings(Integer userId);   //获取我的关注
+    List<User> getAllFollowings(Integer userId);
 
+    /**
+     * 获取我的粉丝
+     * @param userId
+     * @return 粉丝列表
+     * @Author: 朱佳睿
+     * @Time: 2023.04.11
+     */
     @Query("MATCH (u:User)-[r:关注]->(f:User {userId:{0}}) RETURN u")
-    List<User> getAllFollowers(Integer userId);   //获取我的粉丝
+    List<User> getAllFollowers(Integer userId);
 
+    /**
+     * 获取关注数量
+     * @param userId
+     * @return 关注的数量
+     * @Author: 朱佳睿
+     * @Time: 2023.04.11
+     */
     @Query("MATCH (u:User)<-[r:关注]-(f:User) WHERE f.userId = $userId RETURN count(r)")
-    int getFollowCount(@Param("userId") Integer userId);    //获取关注数量
+    int getFollowCount(@Param("userId") Integer userId);
 
+    /**
+     * 获取粉丝数量
+     * @param userId
+     * @return 粉丝数量
+     * 获取粉丝数量
+     */
     @Query("MATCH (u:User)-[r:关注]->(f:User) WHERE f.userId = $userId RETURN count(r)")
-    int getFollowerCount(@Param("userId") Integer userId);    //获取粉丝数量
+    int getFollowerCount(@Param("userId") Integer userId);
 
     /**
      * 推荐感兴趣的人
      * @param userId
      * @param limit
-     * @return
+     * @return 推荐列表
      * @Author: 朱佳睿
      * @Time: 2023.04.04
      */
@@ -62,7 +109,7 @@ public interface UserRespository extends Neo4jRepository<User, Long> {
      * 打印相似度
      * @param userId
      * @param limit
-     * @return
+     * @return 匹配度计算结果
      * @Author: 朱佳睿
      * @Time: 2023.04.04
      */

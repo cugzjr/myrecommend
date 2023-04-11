@@ -14,6 +14,13 @@ import org.springframework.stereotype.Component;
 @Component
 public interface BuyRespository extends Neo4jRepository<BuyRelation, Long> {
 
+    /**
+     * 创建购买关系
+     * @param userId
+     * @param productId
+     * @Author: 朱佳睿
+     * @Time: 2023.04.11
+     */
     @Query("match (n:User),(m:Product) where n.userId=$userId and m.productId=$productId create (n)-[r:Buy]->(m)")
     void createRelation(@Param("userId") Integer userId, @Param("productId") Integer productId);
 }

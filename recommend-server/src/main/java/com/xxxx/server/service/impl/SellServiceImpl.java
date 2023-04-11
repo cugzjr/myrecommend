@@ -1,6 +1,6 @@
 package com.xxxx.server.service.impl;
 
-import com.xxxx.server.Param.ProductParam;
+import com.xxxx.server.param.ProductParam;
 import com.xxxx.server.dao.ProductRespository;
 import com.xxxx.server.dao.SellRespository;
 import com.xxxx.server.dao.UserRespository;
@@ -40,7 +40,7 @@ public class SellServiceImpl implements SellService {
         product.setProductId(productParam.getProductId());
         product.setName(productParam.getName());
         productRespository.save(product);
-        User user = userRespository.findByUserId(productParam.getUserId());  //用户
+        User user = userRespository.findByUserId(productParam.getUserId());
         SellRelation sellRelation = SellRelation.builder().user(user).product(product).relation("出售").build();
         sellRespository.save(sellRelation);
         return RespBean.success("发布成功");

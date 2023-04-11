@@ -18,10 +18,11 @@ public class BuyRelation {
     @Id
     @GeneratedValue
     private Long id;
+
     @StartNode
-    private User user;        //购买者
+    private User user;
     @EndNode
-    private Product product;  //商品
+    private Product product;
     @Property
-    private String relation;  //关系名
+    private String relation;
 }

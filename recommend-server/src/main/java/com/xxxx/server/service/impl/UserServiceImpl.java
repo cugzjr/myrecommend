@@ -51,8 +51,14 @@ public class UserServiceImpl implements UserService {
         User user = userRespository.findByUserId(userId);
         user.setName(name);
         User newuser = userRespository.updateByNode(user);
-        if(newuser != null) return RespBean.success("修改成功");
-        else return RespBean.error("修改失败");
+        if(newuser != null)
+        {
+            return RespBean.success("修改成功");
+        }
+        else
+        {
+            return RespBean.error("修改失败");
+        }
     }
 
     /**
@@ -100,7 +106,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<Integer> recommendUsers(Integer userId){
-        Integer limit = 4;  //推荐数量
+        //推荐数量
+        Integer limit = 4;
         List<User> userList = userRespository.recommendUsers(userId, limit);
         List<Integer> res = new ArrayList<>();
         for(User user:userList) {

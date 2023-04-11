@@ -18,9 +18,9 @@ public class FocusRelation {
     @GeneratedValue
     private Long id;
     @StartNode
-    private User startUser;     //关注者
+    private User startUser;
     @EndNode
-    private User endUser;       //被关注者
+    private User endUser;
     @Property
-    private String relation;   //关系名
+    private String relation;
 }

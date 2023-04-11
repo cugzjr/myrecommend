@@ -14,10 +14,10 @@ public class User {
 
     @Id
     @GeneratedValue
-    private Long id;           //图数据库id
+    private Long id;
     @Property
     @Index(unique = true)
-    private Integer userId;   //用户Id
+    private Integer userId;
     @Property
-    private String name;      //用户名
+    private String name;
 }

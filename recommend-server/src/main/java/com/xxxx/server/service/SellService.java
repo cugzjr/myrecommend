@@ -1,6 +1,6 @@
 package com.xxxx.server.service;
 
-import com.xxxx.server.Param.ProductParam;
+import com.xxxx.server.param.ProductParam;
 import com.xxxx.server.pojo.RespBean;
 
 /**
@@ -9,5 +9,12 @@ import com.xxxx.server.pojo.RespBean;
  * @Time: 2023.03.29
  */
 public interface SellService {
+    /**
+     * 出售商品
+     * @param productParam
+     * @return 出售结果
+     * @Author: 朱佳睿
+     * @Time: 2023.04.11
+     */
     RespBean sellProduct(ProductParam productParam);
 }

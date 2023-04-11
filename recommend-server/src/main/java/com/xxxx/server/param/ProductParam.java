@@ -1,4 +1,4 @@
-package com.xxxx.server.Param;
+package com.xxxx.server.param;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

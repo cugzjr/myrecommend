@@ -1,6 +1,6 @@
 package com.xxxx.server.controller;
 
-import com.xxxx.server.Param.ProductParam;
+import com.xxxx.server.param.ProductParam;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.service.SellService;
 import io.swagger.annotations.ApiOperation;

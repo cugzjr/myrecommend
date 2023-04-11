@@ -18,12 +18,12 @@ public class Product {
 
     @Id
     @GeneratedValue
-    private Long id;   //图数据库id
+    private Long id;
 
     @Property
     @Index(unique = true)
-    private Integer productId;  //商品id
+    private Integer productId;
 
     @Property
-    private String name;       //商品类型
+    private String name;
 }
