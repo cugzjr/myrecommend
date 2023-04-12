@@ -68,8 +68,12 @@ public class recommendtest {
         User user = userRespository.findByUserId(2);
         user.setName("zjr");
         User user1 = userRespository.updateByNode(user);
-        if(user1 != null) System.out.println(1);
-        else System.out.println(0);
+        if(user1 != null) {
+            System.out.println(1);
+        }
+        else{
+            System.out.println(0);
+        }
     }
 
     /**
