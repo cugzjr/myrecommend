@@ -1,11 +1,13 @@
 package com.xxxx.server;
 
 import com.xxxx.server.dao.BuyRespository;
+import com.xxxx.server.dao.FocusRespository;
 import com.xxxx.server.dao.ProductRespository;
 import com.xxxx.server.dao.UserRespository;
 import com.xxxx.server.pojo.Product;
 import com.xxxx.server.pojo.User;
 import com.xxxx.server.relation.BuyRelation;
+import com.xxxx.server.service.FocusService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,12 @@ public class recommendtest {
     BuyRespository buyRespository;
     @Autowired
     UserRespository userRespository;
-
     @Autowired
     ProductRespository productRespository;
+    @Autowired
+    FocusRespository focusRespository;
+    @Autowired
+    FocusService focusService;
 
     /**
      * 创建实体
@@ -103,6 +108,9 @@ public class recommendtest {
         }
     }
 
+    /**
+     * 获取相似度评分列表测试
+     */
     @Test
     public void getSimilarity(){
         User user = userRespository.findByUserId(11);
@@ -113,10 +121,11 @@ public class recommendtest {
         });
     }
 
+    /**
+     * 删除关注关系
+     */
     @Test
-    public void insertRel(){
-
+    public void testDeleteFocus(){
+        focusService.deleteFocus(2, 1);
     }
-
-
 }

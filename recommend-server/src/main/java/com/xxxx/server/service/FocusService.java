@@ -17,4 +17,14 @@ public interface FocusService {
      * @Time: 2023.04.11
      */
     RespBean focusUser(Integer startId, Integer endId);
+
+    /**
+     * 删除关注
+     * @param startId
+     * @param endId
+     * @return 删除结果
+     * @Author: 朱佳睿
+     * @Time: 2023.04.12
+     */
+    RespBean deleteFocus(Integer startId, Integer endId);
 }

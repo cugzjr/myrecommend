@@ -38,4 +38,19 @@ public class FocusServiceImpl implements FocusService {
         focusRespository.save(focusRelation);
         return RespBean.success("关注成功");
     }
+
+    /**
+     * 删除关注
+     * @param startId
+     * @param endId
+     * @return 删除结果
+     * @Author: 朱佳睿
+     * @Time: 2023.04.11
+     */
+    @Override
+    public  RespBean deleteFocus(Integer startId, Integer endId)
+    {
+        focusRespository.deleteFocusRelation(startId, endId);
+        return RespBean.success("删除成功");
+    }
 }

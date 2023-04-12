@@ -5,10 +5,7 @@ import com.xxxx.server.service.FocusService;
 import com.xxxx.server.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -103,5 +100,20 @@ public class FocusController {
         else {
             return res.size();
         }
+    }
+
+    /**
+     * 删除关注接口
+     * @param startId
+     * @param endId
+     * @return 删除结果
+     * @Author: 朱佳睿
+     * @Time: 2023.04.12
+     */
+    @ApiOperation(value = "删除关注")
+    @DeleteMapping
+    public RespBean deleteFocus(@RequestParam("startId") Integer startId, @RequestParam("endId") Integer endId)
+    {
+        return focusService.deleteFocus(startId, endId);
     }
 }
