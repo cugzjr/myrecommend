@@ -17,7 +17,6 @@
 	<description>recommend</description>
 	<modules>
 		<module>recommend-server</module>
-		<module>recommender</module>
 	</modules>
 
 	<properties>
