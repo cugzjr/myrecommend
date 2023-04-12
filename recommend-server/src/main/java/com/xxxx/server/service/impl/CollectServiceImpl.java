@@ -36,6 +36,7 @@ public class CollectServiceImpl implements CollectService {
     @Override
     public RespBean collectProduct(Integer userId, Integer productId)
     {
+        int a = 2;
         User user = userRespository.findByUserId(userId);
         Product product = productRespository.findByProductId(productId);
         CollectRelation collectRelation = CollectRelation.builder().user(user).product(product).relation("收藏").build();
