@@ -4,9 +4,10 @@ import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.service.FocusService;
 import com.xxxx.server.service.UserService;
 import io.swagger.annotations.ApiOperation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.apache.log4j.Logger;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/focus")
 public class FocusController {
+    private Logger logger = Logger.getLogger(FocusController.class.getName());
     @Autowired
     private FocusService focusService;
     @Autowired
@@ -93,6 +95,7 @@ public class FocusController {
     @ApiOperation(value = "我的粉丝数")
     @PostMapping("/myfansnum")
     public Integer getFansnum(@RequestParam("userId") Integer userId){
+        logger.info("PRODUCT_RATING_PREFIX: " + "2|4|5" + "|" + System.currentTimeMillis() / 1000);
         List<Integer> res = userService.getAllFollwers(userId);
         if(res == null) {
             return 0;
