@@ -22,7 +22,7 @@ public class CollectController {
 
     /**
      * 收藏商品接口
-     * @param userId
+     * @param userId 用户Id
      * @param productId
      * @return: RespBean
      * @Author: 朱佳睿

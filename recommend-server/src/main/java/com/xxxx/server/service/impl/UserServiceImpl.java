@@ -4,6 +4,7 @@ import com.xxxx.server.dao.UserRespository;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.pojo.User;
 import com.xxxx.server.service.UserService;
+import com.xxxx.server.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -99,15 +100,15 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 推荐感兴趣的人
-     * @param userId
-     * @return
+     * @param userId 用户Id
+     * @return 好友推荐列表
      * @Author: 朱佳睿
      * @Time: 2023.04.04
      */
     @Override
     public List<Integer> recommendUsers(Integer userId){
         //推荐数量
-        Integer limit = 4;
+        Integer limit = Constant.FRIENDS_RECOMMEND_SIZE;
         List<User> userList = userRespository.recommendUsers(userId, limit);
         List<Integer> res = new ArrayList<>();
         for(User user:userList) {
