@@ -1,14 +1,10 @@
 package com.xxxx.server.controller;
 
-import com.xxxx.server.mongopojo.RateMoreRecentlyProduct;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.service.RecommendService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/recommend")
@@ -38,10 +34,23 @@ public class RecommenderController {
         }
     }
 
+    /**
+     * 商品详情页推荐
+     * @param productId 商品Id
+     * @param page 页码
+     * @return 推荐的结果
+     */
     @ApiOperation(value="商品页推荐")
     @GetMapping("/productpage")
     RespBean detailRecommend(@RequestParam(value = "productId") Integer productId, @RequestParam(value = "page") Integer page)
     {
         return RespBean.success("商品详情页推荐成功",recommendService.detailRecommend(productId,page));
+    }
+
+    @ApiOperation(value="实时推荐")
+    @GetMapping("/onlinepage")
+    RespBean onlineRecommend(@RequestParam(value = "userId") Integer userId, @RequestParam(value = "page") Integer page)
+    {
+        return RespBean.success("实时推荐成功",recommendService.onlineRecommend(userId,page));
     }
 }

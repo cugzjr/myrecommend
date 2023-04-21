@@ -1,5 +1,8 @@
 package com.xxxx.server.utils;
 
+/**
+ * 常量配置类
+ */
 public class Constant {
     //************** FOR MONGODB ****************
     public static String MONGODB_RATING_COLLECTION = "Rating";
@@ -7,6 +10,7 @@ public class Constant {
     public static String MONGODB_USER_RECS_COLLECTION = "UserRecs";
     public static String MONGODB_ITEMCF_COLLECTION = "ItemCFProductRecs";
     public static String MONGODB_CONTENTBASED_COLLECTION = "ContentBasedProductRecs";
+    public static String MONGODB_STREAM_RECS_COLLECTION = "StreamRecs";
 
     //************** FOR REDIS ****************
     public static String REDIS_HOST = "123.249.11.83";

@@ -170,4 +170,39 @@ public class RecommendServiceImpl implements RecommendService {
         }
         return needProductList;
     }
+
+    /**
+     * 实时推荐
+     * @param userId 用户Id
+     * @param page 页码
+     * @return 推荐列表
+     */
+    @Override
+    public List<Integer> onlineRecommend(Integer userId, Integer page){
+        List<Integer> res = new ArrayList<>();
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        StreamRecsProduct streamRecsProduct =  mongoTemplate.findOne(query, StreamRecsProduct.class, Constant.MONGODB_STREAM_RECS_COLLECTION);
+        // 离线推荐结果集和
+        List<ProductScore> scores = streamRecsProduct.getRecs();
+        // 某一页所需的推荐
+        List<Integer> needProductList = new ArrayList<>();
+        if(page>=scores.size()){
+            return needProductList;
+        }
+        // 一页商品的数量
+        int count = 10;
+        int i= page * 10;
+        while(count>0)
+        {
+            try {
+                needProductList.add(scores.get(i).getProductId());
+            } catch (Exception e) {
+                return needProductList;
+            }
+            i ++;
+            -- count;
+        }
+        return needProductList;
+    }
 }

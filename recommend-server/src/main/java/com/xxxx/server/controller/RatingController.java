@@ -5,7 +5,6 @@ import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.service.RatingService;
 import com.xxxx.server.utils.Constant;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

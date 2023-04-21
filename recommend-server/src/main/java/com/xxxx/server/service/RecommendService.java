@@ -1,11 +1,6 @@
 package com.xxxx.server.service;
 
 import com.xxxx.server.mongopojo.ProductScore;
-import com.xxxx.server.mongopojo.RateMoreRecentlyProduct;
-import com.xxxx.server.mongopojo.RateMoreRecentlyProduct;
-import com.xxxx.server.param.RatingParam;
-import io.swagger.models.auth.In;
-
 import java.util.List;
 
 public interface RecommendService {
@@ -53,4 +48,11 @@ public interface RecommendService {
      */
     List<Integer> detailRecommend(Integer productId, Integer page);
 
+    /**
+     * 实时推荐
+     * @param userId 用户Id
+     * @param page 页码
+     * @return 推荐列表
+     */
+    List<Integer> onlineRecommend(Integer userId, Integer page);
 }
