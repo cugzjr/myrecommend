@@ -31,10 +31,13 @@ public interface FocusRespository extends Neo4jRepository<FocusRelation, Long> {
     @Query("MATCH ()-[:关注]->(u:User) RETURN COUNT(DISTINCT u)")
     int getAllPeopleFellows();
 
+    @Query("MATCH (u:User)-[r:关注]->(f:User) WHERE u.userId = $startId AND f.userId = $endId return count(r)")
+    int checkFocus(@Param("startId") Integer startId, @Param("endId") Integer endId);
+
     /**
      * 删除关注关系
-     * @param startId
-     * @param endId
+     * @param startId 用户
+     * @param endId 被关注者
      */
     @Query("MATCH (u:User)-[r:关注]->(f:User) WHERE u.userId = $startId AND f.userId = $endId DELETE r")
     void deleteFocusRelation(@Param("startId") Integer startId, @Param("endId") Integer endId);

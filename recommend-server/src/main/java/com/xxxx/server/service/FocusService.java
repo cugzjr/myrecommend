@@ -27,4 +27,12 @@ public interface FocusService {
      * @Time: 2023.04.12
      */
     RespBean deleteFocus(Integer startId, Integer endId);
+
+    /**
+     * 判断是否相互关注
+     * @param startId 用户1
+     * @param endId 用户2
+     * @return 判断结果
+     */
+    RespBean checkBothFocus(Integer startId, Integer endId);
 }

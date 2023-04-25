@@ -53,4 +53,18 @@ public class FocusServiceImpl implements FocusService {
         focusRespository.deleteFocusRelation(startId, endId);
         return RespBean.success("删除成功");
     }
+
+    /**
+     * 判断是否相互关注
+     * @param startId 用户1
+     * @param endId 用户2
+     * @return 判断结果
+     */
+    @Override
+    public RespBean checkBothFocus(Integer startId, Integer endId){
+        if(focusRespository.checkFocus(startId, endId) > 0 && focusRespository.checkFocus(endId, startId) > 0){
+            return RespBean.success("响应成功", true);
+        }
+        return RespBean.success("响应成功", false);
+    }
 }

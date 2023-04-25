@@ -118,4 +118,11 @@ public class FocusController {
     {
         return focusService.deleteFocus(startId, endId);
     }
+
+    @ApiOperation(value = "判断互关")
+    @GetMapping
+    public RespBean checkBothFocus(@RequestParam("startId") Integer startId, @RequestParam("endId") Integer endId)
+    {
+        return focusService.checkBothFocus(startId, endId);
+    }
 }
