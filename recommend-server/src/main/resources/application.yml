@@ -7,4 +7,4 @@ spring:
       username: neo4j
       password: 12345
     mongodb:
-      uri: mongodb://root:123456@123.249.11.83:27017/recommender?authSource=admin
+      uri: mongodb://root:123456@124.70.143.70:27017/recommender?authSource=admin
