@@ -12,6 +12,8 @@ import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -180,7 +182,6 @@ public class RecommendServiceImpl implements RecommendService {
      */
     @Override
     public List<Integer> onlineRecommend(Integer userId, Integer page){
-        List<Integer> res = new ArrayList<>();
 //        Query query = new Query();
 //        query.addCriteria(Criteria.where("userId").is(userId));
 //        StreamRecsProduct streamRecsProduct =  mongoTemplate.findOne(query, StreamRecsProduct.class, Constant.MONGODB_STREAM_RECS_COLLECTION);
@@ -202,6 +203,14 @@ public class RecommendServiceImpl implements RecommendService {
             productScore.setScore(score);
             scores.add(productScore);
         }
+        // 按评分降序排列
+        scores.sort(new Comparator<ProductScore>() {
+            @Override
+            public int compare(ProductScore ps1, ProductScore ps2) {
+                // 比较评分，按降序排列
+                return Double.compare(ps2.getScore(), ps1.getScore());
+            }
+        });
         // 某一页所需的推荐
 //        List<Integer> needProductList = new ArrayList<>();
 //        if(page>=scores.size()){
