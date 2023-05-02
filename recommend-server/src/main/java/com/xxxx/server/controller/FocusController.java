@@ -94,7 +94,6 @@ public class FocusController {
     @ApiOperation(value = "我的粉丝数")
     @PostMapping("/myfansnum")
     public Integer getFansnum(@RequestParam("userId") Integer userId){
-        //logger.info("PRODUCT_RATING_PREFIX: " + "2|4|5" + "|" + System.currentTimeMillis() / 1000);
         List<Integer> res = userService.getAllFollwers(userId);
         if(res == null) {
             return 0;

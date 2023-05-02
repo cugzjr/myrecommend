@@ -33,7 +33,7 @@ public class SellController {
 
     @ApiOperation(value = "删除发布")
     @DeleteMapping
-    public RespBean deleteCollect(@RequestParam("userId") Integer userId, @RequestParam("productId") Integer productId)
+    public RespBean deleteProduct(@RequestParam("userId") Integer userId, @RequestParam("productId") Integer productId)
     {
         return sellService.deleteCollect(userId, productId);
     }
