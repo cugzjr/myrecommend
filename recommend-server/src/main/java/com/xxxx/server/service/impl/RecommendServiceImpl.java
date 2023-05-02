@@ -1,7 +1,6 @@
 package com.xxxx.server.service.impl;
 
 import com.xxxx.server.mongopojo.*;
-import com.xxxx.server.mongopojo.RateMoreRecentlyProduct;
 import com.xxxx.server.service.RecommendService;
 import com.xxxx.server.utils.Constant;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -29,7 +28,18 @@ public class RecommendServiceImpl implements RecommendService {
     @Override
     public List<Integer> getHotProducts(Integer page)
     {
-        List<RateMoreRecentlyProduct> result = mongoTemplate.findAll(RateMoreRecentlyProduct.class, Constant.MONGODB_RATE_MORE_PRODUCTS_RECENTLY_COLLECTION);
+//        List<RateMoreRecentlyProduct> result = mongoTemplate.findAll(RateMoreRecentlyProduct.class, Constant.MONGODB_RATE_MORE_PRODUCTS_RECENTLY_COLLECTION);
+        List<Integer> result = new ArrayList<>();
+        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
+        jedis.auth(Constant.REDIS_PASSWORD);
+        String redisKey = "HomeRecommend:" ;
+        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
+        jedis.close();
+        for (String redisRec : redisRecs) {
+            String[] parts = redisRec.split(":");
+            int productId = Integer.parseInt(parts[0]);
+            result.add(productId);
+        }
         // 当前页面的商品
         List<Integer> needProductList = new ArrayList<>();
         if(page>=result.size()){
@@ -37,15 +47,15 @@ public class RecommendServiceImpl implements RecommendService {
         }
         // 一页商品的数量
         int count = 10;
-        int i= page * 5;
+        int i= result.size() - page * 10 - 1;
         while(count>0)
         {
             try {
-                needProductList.add(result.get(i).getProductId());
+                needProductList.add(result.get(i));
             } catch (Exception e) {
                 return needProductList;
             }
-            i ++;
+            i --;
             -- count;
         }
         return needProductList;
@@ -71,12 +81,22 @@ public class RecommendServiceImpl implements RecommendService {
      */
     @Override
     public List<Integer> getUserRecsProducts(Integer userId, Integer page){
-        List<Integer> res = new ArrayList<>();
-        Query query = new Query();
-        query.addCriteria(Criteria.where("userId").is(userId));
-        UserRecs userRecs =  mongoTemplate.findOne(query, UserRecs.class, Constant.MONGODB_USER_RECS_COLLECTION);
-        // 离线推荐结果集和
-        List<ProductScore> scores = userRecs.getRecs();
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("userId").is(userId));
+//        UserRecs userRecs =  mongoTemplate.findOne(query, UserRecs.class, Constant.MONGODB_USER_RECS_COLLECTION);
+//        // 离线推荐结果集和
+//        List<ProductScore> scores = userRecs.getRecs();
+        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
+        jedis.auth(Constant.REDIS_PASSWORD);
+        String redisKey = "OfflineRecommend:" + userId;
+        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
+        jedis.close();
+        List<Integer> scores = new ArrayList<>();
+        for (String redisRec : redisRecs) {
+            String[] parts = redisRec.split(":");
+            int productId = Integer.parseInt(parts[0]);
+            scores.add(productId);
+        }
         // 某一页所需的推荐
         List<Integer> needProductList = new ArrayList<>();
         if(page>=scores.size()){
@@ -84,15 +104,15 @@ public class RecommendServiceImpl implements RecommendService {
         }
         // 一页商品的数量
         int count = 10;
-        int i= page * 10;
+        int i= scores.size() - page * 10 - 1;
         while(count>0)
         {
             try {
-                needProductList.add(scores.get(i).getProductId());
+                needProductList.add(scores.get(i));
             } catch (Exception e) {
                 return needProductList;
             }
-            i ++;
+            i --;
             -- count;
         }
         return needProductList;
@@ -104,14 +124,27 @@ public class RecommendServiceImpl implements RecommendService {
      * @return 推荐列表
      */
     @Override
-    public List<ProductScore> getContentBasedProductRecs(Integer productId){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("productId").is(productId));
-        ContentBasedProduct contentBasedProduct = mongoTemplate.findOne(query, ContentBasedProduct.class, Constant.MONGODB_CONTENTBASED_COLLECTION);
-        if(contentBasedProduct != null){
-            return contentBasedProduct.getRecs();
+    public List<Integer> getContentBasedProductRecs(Integer productId){
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("productId").is(productId));
+//        ContentBasedProduct contentBasedProduct = mongoTemplate.findOne(query, ContentBasedProduct.class, Constant.MONGODB_CONTENTBASED_COLLECTION);
+//        if(contentBasedProduct != null){
+//            return contentBasedProduct.getRecs();
+//        }
+//        return null;
+        List<Integer> res = new ArrayList<>();
+        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
+        jedis.auth(Constant.REDIS_PASSWORD);
+        String redisKey = "ContentRecommend:" + productId;
+        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
+        jedis.close();
+        for (String redisRec : redisRecs) {
+            String[] parts = redisRec.split(":");
+            int productid = Integer.parseInt(parts[0]);
+            res.add(productid);
         }
-        return null;
+        Collections.reverse(res);
+        return res;
     }
 
     /**
@@ -120,14 +153,27 @@ public class RecommendServiceImpl implements RecommendService {
      * @return 推荐列表
      */
     @Override
-    public List<ProductScore> getItemcfProductRecs(Integer productId){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("productId").is(productId));
-        ItemcfProduct itemcfProduct = mongoTemplate.findOne(query, ItemcfProduct.class, Constant.MONGODB_ITEMCF_COLLECTION);
-        if(itemcfProduct != null){
-            return itemcfProduct.getRecs();
+    public List<Integer> getItemcfProductRecs(Integer productId){
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("productId").is(productId));
+//        ItemcfProduct itemcfProduct = mongoTemplate.findOne(query, ItemcfProduct.class, Constant.MONGODB_ITEMCF_COLLECTION);
+//        if(itemcfProduct != null){
+//            return itemcfProduct.getRecs();
+//        }
+//        return null;
+        List<Integer> res = new ArrayList<>();
+        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
+        jedis.auth(Constant.REDIS_PASSWORD);
+        String redisKey = "ItemCFRecommend:" + productId;
+        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
+        jedis.close();
+        for (String redisRec : redisRecs) {
+            String[] parts = redisRec.split(":");
+            int productid = Integer.parseInt(parts[0]);
+            res.add(productid);
         }
-        return null;
+        Collections.reverse(res);
+        return res;
     }
 
     /**
@@ -140,17 +186,17 @@ public class RecommendServiceImpl implements RecommendService {
     public List<Integer> detailRecommend(Integer productId, Integer page){
         List<Integer> allProducts = new ArrayList<>();
         // 基于内容推荐的列表
-        List<ProductScore> contentProducts = getContentBasedProductRecs(productId);
+        List<Integer> contentProducts = getContentBasedProductRecs(productId);
         // 基于物品协同推荐的列表
-        List<ProductScore> itemcfProducts = getItemcfProductRecs(productId);
-        for(ProductScore productScore:contentProducts){
-            if(!allProducts.contains(productScore.getProductId())){
-                allProducts.add(productScore.getProductId());
+        List<Integer> itemcfProducts = getItemcfProductRecs(productId);
+        for(Integer productid:contentProducts){
+            if(!allProducts.contains(productid)){
+                allProducts.add(productid);
             }
         }
-        for(ProductScore productScore:itemcfProducts){
-            if(!allProducts.contains(productScore.getProductId())){
-                allProducts.add(productScore.getProductId());
+        for(Integer productid:itemcfProducts){
+            if(!allProducts.contains(productid)){
+                allProducts.add(productid);
             }
         }
         // 某一页所需的推荐

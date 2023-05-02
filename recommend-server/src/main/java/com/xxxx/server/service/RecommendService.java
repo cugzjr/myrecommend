@@ -31,14 +31,14 @@ public interface RecommendService {
      * @param productId 商品Id
      * @return 推荐列表
      */
-    List<ProductScore> getContentBasedProductRecs(Integer productId);
+    List<Integer> getContentBasedProductRecs(Integer productId);
 
     /**
      * 基于物品的协同过滤的推荐
      * @param productId 商品Id
      * @return 推荐列表
      */
-    List<ProductScore> getItemcfProductRecs(Integer productId);
+    List<Integer> getItemcfProductRecs(Integer productId);
 
     /**
      * 商品详情页推荐

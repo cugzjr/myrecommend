@@ -13,5 +13,5 @@ public class Rating  {
     private int userId;
     private int productId;
     private double score;
-    private long timestamp;
+    private int timestamp;
 }

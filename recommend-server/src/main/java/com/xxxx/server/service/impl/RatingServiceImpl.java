@@ -76,7 +76,7 @@ public class RatingServiceImpl implements RatingService {
                 .and("productId").is(ratingParam.getProductId()));
         Update update = new Update();
         update.set("score", ratingParam.getScore());
-        update.set("timestamp",System.currentTimeMillis()/1000);
+        update.set("timestamp",(int)System.currentTimeMillis()/1000);
         UpdateResult result = mongoTemplate.updateFirst(query, update, Rating.class, Constant.MONGODB_RATING_COLLECTION);
         return result.getModifiedCount() > 0;
     }
@@ -87,7 +87,7 @@ public class RatingServiceImpl implements RatingService {
         rating.setUserId(ratingParam.getUserId());
         rating.setProductId(ratingParam.getProductId());
         rating.setScore(ratingParam.getScore());
-        rating.setTimestamp(System.currentTimeMillis()/1000);
+        rating.setTimestamp((int) (System.currentTimeMillis()/1000));
         mongoTemplate.insert(rating, Constant.MONGODB_RATING_COLLECTION);
         return true;
     }
