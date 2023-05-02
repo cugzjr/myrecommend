@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -180,11 +181,27 @@ public class RecommendServiceImpl implements RecommendService {
     @Override
     public List<Integer> onlineRecommend(Integer userId, Integer page){
         List<Integer> res = new ArrayList<>();
-        Query query = new Query();
-        query.addCriteria(Criteria.where("userId").is(userId));
-        StreamRecsProduct streamRecsProduct =  mongoTemplate.findOne(query, StreamRecsProduct.class, Constant.MONGODB_STREAM_RECS_COLLECTION);
-        // 离线推荐结果集和
-        List<ProductScore> scores = streamRecsProduct.getRecs();
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("userId").is(userId));
+//        StreamRecsProduct streamRecsProduct =  mongoTemplate.findOne(query, StreamRecsProduct.class, Constant.MONGODB_STREAM_RECS_COLLECTION);
+//        // 离线推荐结果集和
+//        List<ProductScore> scores = streamRecsProduct.getRecs();
+        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
+        jedis.auth(Constant.REDIS_PASSWORD);
+        String redisKey = "StreamRecs:" + userId;
+        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
+        jedis.close();
+        // 解析Redis中的推荐结果
+        List<ProductScore> scores = new ArrayList<>();
+        for (String redisRec : redisRecs) {
+            String[] parts = redisRec.split(":");
+            int productId = Integer.parseInt(parts[0]);
+            double score = Double.parseDouble(parts[1]);
+            ProductScore productScore = new ProductScore();
+            productScore.setProductId(productId);
+            productScore.setScore(score);
+            scores.add(productScore);
+        }
         // 某一页所需的推荐
         List<Integer> needProductList = new ArrayList<>();
         if(page>=scores.size()){
