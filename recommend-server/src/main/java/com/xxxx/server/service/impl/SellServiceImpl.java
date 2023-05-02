@@ -45,4 +45,10 @@ public class SellServiceImpl implements SellService {
         sellRespository.save(sellRelation);
         return RespBean.success("发布成功");
     }
+
+    @Override
+    public RespBean deleteCollect(Integer userId, Integer productId){
+        sellRespository.deleteBuyRelation(userId, productId);
+        return RespBean.success("删除成功");
+    }
 }

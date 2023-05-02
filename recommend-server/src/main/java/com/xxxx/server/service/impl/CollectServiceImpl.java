@@ -43,4 +43,10 @@ public class CollectServiceImpl implements CollectService {
         return RespBean.success("收藏成功");
     }
 
+    @Override
+    public RespBean deleteCollect(Integer userId, Integer productId){
+        collectRespository.deleteCollectRelation(userId, productId);
+        return RespBean.success("删除成功");
+    }
+
 }

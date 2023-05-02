@@ -17,4 +17,12 @@ public interface SellService {
      * @Time: 2023.04.11
      */
     RespBean sellProduct(ProductParam productParam);
+
+    /**
+     * 删除发布的商品
+     * @param userId
+     * @param productId
+     * @return
+     */
+    RespBean deleteCollect(Integer userId, Integer productId);
 }

@@ -4,10 +4,7 @@ import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.service.CollectService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 收藏接口类
@@ -33,5 +30,12 @@ public class CollectController {
     public RespBean collectProduct(@RequestParam("userId") Integer userId, @RequestParam("productId") Integer productId)
     {
         return collectService.collectProduct(userId, productId);
+    }
+
+    @ApiOperation(value = "删除收藏")
+    @DeleteMapping
+    public RespBean deleteCollect(@RequestParam("userId") Integer userId, @RequestParam("productId") Integer productId)
+    {
+        return collectService.deleteCollect(userId, productId);
     }
 }

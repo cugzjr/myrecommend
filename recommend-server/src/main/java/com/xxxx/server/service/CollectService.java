@@ -17,4 +17,14 @@ public interface CollectService {
      * @Time: 2023.04.11
      */
     RespBean collectProduct(Integer userId, Integer productId);
+
+    /**
+     * 取消收藏
+     * @param userId
+     * @param productId
+     * @return RespBean
+     * @Author: 朱佳睿
+     * @Time: 2023.05.01
+     */
+    RespBean deleteCollect(Integer userId, Integer productId);
 }
