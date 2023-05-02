@@ -212,30 +212,13 @@ public class RecommendServiceImpl implements RecommendService {
             }
         });
         // 某一页所需的推荐
-//        List<Integer> needProductList = new ArrayList<>();
-//        if(page>=scores.size()){
-//            return needProductList;
-//        }
-//        // 一页商品的数量
-//        int count = 10;
-//        int i= page * 10;
-//        while(count>0)
-//        {
-//            try {
-//                needProductList.add(scores.get(i).getProductId());
-//            } catch (Exception e) {
-//                return needProductList;
-//            }
-//            i ++;
-//            -- count;
-//        }
         List<Integer> needProductList = new ArrayList<>();
         if(page>=scores.size()){
             return needProductList;
         }
         // 一页商品的数量
         int count = 10;
-        int i= scores.size() - page * count - 1;
+        int i= page * 10;
         while(count>0)
         {
             try {
@@ -243,7 +226,7 @@ public class RecommendServiceImpl implements RecommendService {
             } catch (Exception e) {
                 return needProductList;
             }
-            i --;
+            i ++;
             -- count;
         }
         return needProductList;
