@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<suite name="TesterHome" parallel="tests" thread-count="2"> <!-- 并行地执行test套件-->
+    <parameter name="appURL" value="https://testerhome.com/account/sign_in"/>
+    <parameter name="browserType" value="chrome"/>
+    <parameter name="driverPath" value="C:\Program Files (x86)\Google\Chrome\Application\"/>
+
+    <test name="admin">
+        <classes>
+            <class name="com.xxxx.server.controller.BuyControllerTest" />
+            <class name="com.xxxx.server.controller.CollectControllerTest" />
+            <class name="com.xxxx.server.controller.FocusControllerTest"/>
+            <class name="com.xxxx.server.controller.SellControllerTest"/>
+        </classes>
+    </test>
+</suite>
