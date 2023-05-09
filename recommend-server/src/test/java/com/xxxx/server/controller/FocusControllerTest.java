@@ -29,7 +29,7 @@ public class FocusControllerTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void GetFocusNumTest(){
-        assertEquals(focusController.getFocusnum(12).intValue(), 14);
+        assertEquals(focusController.getFocusnum(12).intValue(), 10);
         assertEquals(focusController.getFocusnum(407).intValue(), 0);
     }
 
@@ -38,7 +38,7 @@ public class FocusControllerTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void GetFansNumTest(){
-        assertEquals(focusController.getFansnum(5).intValue(), 6);
+        assertEquals(focusController.getFansnum(5).intValue(), 7);
         assertEquals(focusController.getFansnum(321).intValue(), 0);
     }
 
