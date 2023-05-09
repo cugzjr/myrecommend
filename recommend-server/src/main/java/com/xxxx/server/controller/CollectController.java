@@ -38,4 +38,21 @@ public class CollectController {
     {
         return collectService.deleteCollect(userId, productId);
     }
+
+    @ApiOperation(value = "判断是否收藏")
+    @GetMapping("checkcollect")
+    public RespBean checkCollect(@RequestParam("userId") Integer userId, @RequestParam("productId") Integer productId)
+    {
+        return collectService.checkCollect(userId, productId);
+    }
+    @ApiOperation(value = "收藏总数")
+    @GetMapping("collectnum")
+    public RespBean getCollectNum(@RequestParam("productId") Integer productId){
+        return collectService.getCollectNum(productId);
+    }
+    @ApiOperation(value = "我的收藏")
+    @GetMapping("mycollect")
+    public RespBean getMyCollect(@RequestParam("userId") Integer userId, @RequestParam("page") Integer page){
+        return RespBean.success("获取成功", collectService.getMyCollect(userId, page));
+    }
 }

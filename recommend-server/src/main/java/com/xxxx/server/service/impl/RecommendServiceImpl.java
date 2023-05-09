@@ -32,7 +32,7 @@ public class RecommendServiceImpl implements RecommendService {
         List<Integer> result = new ArrayList<>();
         Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
         jedis.auth(Constant.REDIS_PASSWORD);
-        String redisKey = "HomeRecommend:" ;
+        String redisKey = "HotProducts:" ;
         List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
         jedis.close();
         for (String redisRec : redisRecs) {

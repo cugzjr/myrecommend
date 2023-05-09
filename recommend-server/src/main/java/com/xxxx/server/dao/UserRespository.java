@@ -41,7 +41,7 @@ public interface UserRespository extends Neo4jRepository<User, Long> {
      * @Author: 朱佳睿
      * @Time: 2023.04.11
      */
-    @Query("MATCH (n) WHERE id(n) = :#{#user.Id} SET n.userId = :#{#user.userId},n.name = :#{#user.name} RETURN n")
+    @Query("MATCH (n) WHERE id(n) = :#{#user.id} SET n.userId = :#{#user.userId},n.name = :#{#user.name} RETURN n")
     User updateByNode(@Param("user") User user);
 
     /**

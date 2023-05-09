@@ -2,6 +2,8 @@ package com.xxxx.server.service;
 
 import com.xxxx.server.pojo.RespBean;
 
+import java.util.List;
+
 /**
  * 收藏相关操作接口
  * @Author: 朱佳睿
@@ -27,4 +29,7 @@ public interface CollectService {
      * @Time: 2023.05.01
      */
     RespBean deleteCollect(Integer userId, Integer productId);
+    RespBean checkCollect(Integer userId, Integer productId);
+    RespBean getCollectNum(Integer productId);
+    List<Integer> getMyCollect(Integer userId, Integer page);
 }

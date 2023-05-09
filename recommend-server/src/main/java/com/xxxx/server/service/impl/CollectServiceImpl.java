@@ -11,6 +11,9 @@ import com.xxxx.server.service.CollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 收藏商品接口实现
  * @Author: 朱佳睿
@@ -48,5 +51,38 @@ public class CollectServiceImpl implements CollectService {
         collectRespository.deleteCollectRelation(userId, productId);
         return RespBean.success("删除成功");
     }
-
+    @Override
+    public RespBean checkCollect(Integer userId, Integer productId){
+        if(collectRespository.checkCollect(userId, productId) == 0){
+            return RespBean.success("获取成功", false);
+        }
+        return RespBean.success("获取成功", true);
+    }
+    @Override
+    public RespBean getCollectNum(Integer productId){
+        return RespBean.success("获取成功", collectRespository.getProductCollectCount(productId));
+    }
+    @Override
+    public List<Integer> getMyCollect(Integer userId, Integer page){
+        List<Product> products = collectRespository.findCollectProductsByUserId(userId);
+        // 当前页面的商品
+        List<Integer> needProductList = new ArrayList<>();
+        if(page>=products.size()){
+            return needProductList;
+        }
+        // 一页商品的数量
+        int count = 10;
+        int i= page * count;
+        while(count>0)
+        {
+            try {
+                needProductList.add(products.get(i).getProductId());
+            } catch (Exception e) {
+                return needProductList;
+            }
+            i ++;
+            -- count;
+        }
+        return needProductList;
+    }
 }

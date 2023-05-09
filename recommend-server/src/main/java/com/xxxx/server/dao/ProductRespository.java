@@ -20,4 +20,7 @@ public interface ProductRespository extends Neo4jRepository<Product, Long> {
      */
     @Query("MATCH (n) WHERE n.productId = :#{#productId} return n")
     Product findByProductId(@Param("productId") Integer productId);
+
+    @Query("MATCH (n) WHERE id(n) = :#{#product.id} SET n.productId = :#{#product.productId},n.name = :#{#product.name} RETURN n")
+    Product updateByNode(@Param("product") Product product);
 }
