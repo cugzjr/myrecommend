@@ -81,22 +81,22 @@ public class RecommendServiceImpl implements RecommendService {
      */
     @Override
     public List<Integer> getUserRecsProducts(Integer userId, Integer page){
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("userId").is(userId));
-//        UserRecs userRecs =  mongoTemplate.findOne(query, UserRecs.class, Constant.MONGODB_USER_RECS_COLLECTION);
-//        // 离线推荐结果集和
-//        List<ProductScore> scores = userRecs.getRecs();
-        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
-        jedis.auth(Constant.REDIS_PASSWORD);
-        String redisKey = "OfflineRecommend:" + userId;
-        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
-        jedis.close();
-        List<Integer> scores = new ArrayList<>();
-        for (String redisRec : redisRecs) {
-            String[] parts = redisRec.split(":");
-            int productId = Integer.parseInt(parts[0]);
-            scores.add(productId);
-        }
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        UserRecs userRecs =  mongoTemplate.findOne(query, UserRecs.class, Constant.MONGODB_USER_RECS_COLLECTION);
+        // 离线推荐结果集和
+        List<ProductScore> scores = userRecs.getRecs();
+//        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
+//        jedis.auth(Constant.REDIS_PASSWORD);
+//        String redisKey = "OfflineRecommend:" + userId;
+//        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
+//        jedis.close();
+//        List<Integer> scores = new ArrayList<>();
+//        for (String redisRec : redisRecs) {
+//            String[] parts = redisRec.split(":");
+//            int productId = Integer.parseInt(parts[0]);
+//            scores.add(productId);
+//        }
         // 某一页所需的推荐
         List<Integer> needProductList = new ArrayList<>();
         if(page>=scores.size()){
@@ -108,7 +108,7 @@ public class RecommendServiceImpl implements RecommendService {
         while(count>0)
         {
             try {
-                needProductList.add(scores.get(i));
+                needProductList.add(scores.get(i).getProductId());
             } catch (Exception e) {
                 return needProductList;
             }
