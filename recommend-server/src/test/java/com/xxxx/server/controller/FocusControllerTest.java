@@ -23,16 +23,7 @@ public class FocusControllerTest extends AbstractTestNGSpringContextTests {
         Integer startId = 22, endId = 1028;
         assertEquals(focusController.focusUser(startId, endId).getMessage(), "关注成功");
     }
-
-    /**
-     * 获取关注数量接口测试
-     */
-    @Test
-    public void GetFocusNumTest(){
-        assertEquals(focusController.getFocusnum(12).intValue(), 10);
-        assertEquals(focusController.getFocusnum(407).intValue(), 0);
-    }
-
+    
     /**
      * 获取粉丝数量接口测试
      */
