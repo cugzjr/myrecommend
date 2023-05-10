@@ -12,7 +12,6 @@ import redis.clients.jedis.Jedis;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -125,26 +124,30 @@ public class RecommendServiceImpl implements RecommendService {
      */
     @Override
     public List<Integer> getContentBasedProductRecs(Integer productId){
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("productId").is(productId));
-//        ContentBasedProduct contentBasedProduct = mongoTemplate.findOne(query, ContentBasedProduct.class, Constant.MONGODB_CONTENTBASED_COLLECTION);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("productId").is(productId));
+        ContentBasedProduct contentBasedProduct = mongoTemplate.findOne(query, ContentBasedProduct.class, Constant.MONGODB_CONTENTBASED_COLLECTION);
 //        if(contentBasedProduct != null){
 //            return contentBasedProduct.getRecs();
 //        }
 //        return null;
         List<Integer> res = new ArrayList<>();
-        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
-        jedis.auth(Constant.REDIS_PASSWORD);
-        String redisKey = "ContentRecommend:" + productId;
-        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
-        jedis.close();
-        for (String redisRec : redisRecs) {
-            String[] parts = redisRec.split(":");
-            int productid = Integer.parseInt(parts[0]);
-            res.add(productid);
+        for(ProductScore productScore : contentBasedProduct.getRecs()){
+            res.add(productScore.getProductId());
         }
-        Collections.reverse(res);
         return res;
+//        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
+//        jedis.auth(Constant.REDIS_PASSWORD);
+//        String redisKey = "ContentRecommend:" + productId;
+//        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
+//        jedis.close();
+//        for (String redisRec : redisRecs) {
+//            String[] parts = redisRec.split(":");
+//            int productid = Integer.parseInt(parts[0]);
+//            res.add(productid);
+//        }
+//        Collections.reverse(res);
+//        return res;
     }
 
     /**
@@ -154,26 +157,27 @@ public class RecommendServiceImpl implements RecommendService {
      */
     @Override
     public List<Integer> getItemcfProductRecs(Integer productId){
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("productId").is(productId));
-//        ItemcfProduct itemcfProduct = mongoTemplate.findOne(query, ItemcfProduct.class, Constant.MONGODB_ITEMCF_COLLECTION);
-//        if(itemcfProduct != null){
-//            return itemcfProduct.getRecs();
-//        }
-//        return null;
+        Query query = new Query();
+        query.addCriteria(Criteria.where("productId").is(productId));
+        ItemcfProduct itemcfProduct = mongoTemplate.findOne(query, ItemcfProduct.class, Constant.MONGODB_ITEMCF_COLLECTION);
         List<Integer> res = new ArrayList<>();
-        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
-        jedis.auth(Constant.REDIS_PASSWORD);
-        String redisKey = "ItemCFRecommend:" + productId;
-        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
-        jedis.close();
-        for (String redisRec : redisRecs) {
-            String[] parts = redisRec.split(":");
-            int productid = Integer.parseInt(parts[0]);
-            res.add(productid);
+        for(ProductScore productScore : itemcfProduct.getRecs()){
+            res.add(productScore.getProductId());
         }
-        Collections.reverse(res);
         return res;
+//        List<Integer> res = new ArrayList<>();
+//        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
+//        jedis.auth(Constant.REDIS_PASSWORD);
+//        String redisKey = "ItemCFRecommend:" + productId;
+//        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
+//        jedis.close();
+//        for (String redisRec : redisRecs) {
+//            String[] parts = redisRec.split(":");
+//            int productid = Integer.parseInt(parts[0]);
+//            res.add(productid);
+//        }
+//        Collections.reverse(res);
+//        return res;
     }
 
     /**
@@ -228,27 +232,27 @@ public class RecommendServiceImpl implements RecommendService {
      */
     @Override
     public List<Integer> onlineRecommend(Integer userId, Integer page){
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("userId").is(userId));
-//        StreamRecsProduct streamRecsProduct =  mongoTemplate.findOne(query, StreamRecsProduct.class, Constant.MONGODB_STREAM_RECS_COLLECTION);
-//        // 离线推荐结果集和
-//        List<ProductScore> scores = streamRecsProduct.getRecs();
-        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
-        jedis.auth(Constant.REDIS_PASSWORD);
-        String redisKey = "StreamRecs:" + userId;
-        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
-        jedis.close();
-        // 解析Redis中的推荐结果
-        List<ProductScore> scores = new ArrayList<>();
-        for (String redisRec : redisRecs) {
-            String[] parts = redisRec.split(":");
-            int productId = Integer.parseInt(parts[0]);
-            double score = Double.parseDouble(parts[1]);
-            ProductScore productScore = new ProductScore();
-            productScore.setProductId(productId);
-            productScore.setScore(score);
-            scores.add(productScore);
-        }
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        StreamRecsProduct streamRecsProduct =  mongoTemplate.findOne(query, StreamRecsProduct.class, Constant.MONGODB_STREAM_RECS_COLLECTION);
+        // 离线推荐结果集和
+        List<ProductScore> scores = streamRecsProduct.getRecs();
+//        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
+//        jedis.auth(Constant.REDIS_PASSWORD);
+//        String redisKey = "StreamRecs:" + userId;
+//        List<String> redisRecs = jedis.lrange(redisKey, 0, -1);
+//        jedis.close();
+//        // 解析Redis中的推荐结果
+//        List<ProductScore> scores = new ArrayList<>();
+//        for (String redisRec : redisRecs) {
+//            String[] parts = redisRec.split(":");
+//            int productId = Integer.parseInt(parts[0]);
+//            double score = Double.parseDouble(parts[1]);
+//            ProductScore productScore = new ProductScore();
+//            productScore.setProductId(productId);
+//            productScore.setScore(score);
+//            scores.add(productScore);
+//        }
         // 某一页所需的推荐
         List<Integer> needProductList = new ArrayList<>();
         if(page>=scores.size()){
