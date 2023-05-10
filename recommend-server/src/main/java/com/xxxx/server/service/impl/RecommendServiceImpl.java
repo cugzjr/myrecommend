@@ -70,7 +70,7 @@ public class RecommendServiceImpl implements RecommendService {
     public boolean checkUserNew(Integer userId){
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId));
-        return mongoTemplate.exists(query, Rating.class, Constant.MONGODB_RATING_COLLECTION);
+        return mongoTemplate.exists(query, UserRecs.class, Constant.MONGODB_USER_RECS_COLLECTION);
     }
 
     /**
