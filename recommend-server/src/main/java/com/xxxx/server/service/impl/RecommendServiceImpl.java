@@ -126,6 +126,9 @@ public class RecommendServiceImpl implements RecommendService {
     public List<Integer> getContentBasedProductRecs(Integer productId){
         Query query = new Query();
         query.addCriteria(Criteria.where("productId").is(productId));
+        if(mongoTemplate.exists(query, ContentBasedProduct.class, Constant.MONGODB_CONTENTBASED_COLLECTION)){
+            return null;
+        }
         ContentBasedProduct contentBasedProduct = mongoTemplate.findOne(query, ContentBasedProduct.class, Constant.MONGODB_CONTENTBASED_COLLECTION);
 //        if(contentBasedProduct != null){
 //            return contentBasedProduct.getRecs();
@@ -159,6 +162,9 @@ public class RecommendServiceImpl implements RecommendService {
     public List<Integer> getItemcfProductRecs(Integer productId){
         Query query = new Query();
         query.addCriteria(Criteria.where("productId").is(productId));
+        if(mongoTemplate.exists(query, ItemcfProduct.class, Constant.MONGODB_ITEMCF_COLLECTION)){
+            return null;
+        }
         ItemcfProduct itemcfProduct = mongoTemplate.findOne(query, ItemcfProduct.class, Constant.MONGODB_ITEMCF_COLLECTION);
         List<Integer> res = new ArrayList<>();
         for(ProductScore productScore : itemcfProduct.getRecs()){
