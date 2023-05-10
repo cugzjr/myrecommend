@@ -206,7 +206,7 @@ public class RecommendServiceImpl implements RecommendService {
         }
         // 一页商品的数量
         int count = 10;
-        int i= page * 10;
+        int i= allProducts.size() - page * 10 - 1;
         while(count>0)
         {
             try {
@@ -214,7 +214,7 @@ public class RecommendServiceImpl implements RecommendService {
             } catch (Exception e) {
                 return needProductList;
             }
-            i ++;
+            i --;
             -- count;
         }
         return needProductList;
