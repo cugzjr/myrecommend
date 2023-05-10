@@ -83,8 +83,11 @@ public class RecommendServiceImpl implements RecommendService {
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId));
         UserRecs userRecs =  mongoTemplate.findOne(query, UserRecs.class, Constant.MONGODB_USER_RECS_COLLECTION);
+        List<ProductScore> scores = new ArrayList<>();
         // 离线推荐结果集和
-        List<ProductScore> scores = userRecs.getRecs();
+        if(userRecs != null){
+            scores = userRecs.getRecs();
+        }
 //        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
 //        jedis.auth(Constant.REDIS_PASSWORD);
 //        String redisKey = "OfflineRecommend:" + userId;
@@ -126,7 +129,7 @@ public class RecommendServiceImpl implements RecommendService {
     public List<Integer> getContentBasedProductRecs(Integer productId){
         Query query = new Query();
         query.addCriteria(Criteria.where("productId").is(productId));
-        if(mongoTemplate.exists(query, ContentBasedProduct.class, Constant.MONGODB_CONTENTBASED_COLLECTION)){
+        if(!mongoTemplate.exists(query, ContentBasedProduct.class, Constant.MONGODB_CONTENTBASED_COLLECTION)){
             return null;
         }
         ContentBasedProduct contentBasedProduct = mongoTemplate.findOne(query, ContentBasedProduct.class, Constant.MONGODB_CONTENTBASED_COLLECTION);
@@ -135,9 +138,12 @@ public class RecommendServiceImpl implements RecommendService {
 //        }
 //        return null;
         List<Integer> res = new ArrayList<>();
-        for(ProductScore productScore : contentBasedProduct.getRecs()){
-            res.add(productScore.getProductId());
+        if(contentBasedProduct != null){
+            for(ProductScore productScore : contentBasedProduct.getRecs()){
+                res.add(productScore.getProductId());
+            }
         }
+
         return res;
 //        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
 //        jedis.auth(Constant.REDIS_PASSWORD);
@@ -162,14 +168,17 @@ public class RecommendServiceImpl implements RecommendService {
     public List<Integer> getItemcfProductRecs(Integer productId){
         Query query = new Query();
         query.addCriteria(Criteria.where("productId").is(productId));
-        if(mongoTemplate.exists(query, ItemcfProduct.class, Constant.MONGODB_ITEMCF_COLLECTION)){
+        if(!mongoTemplate.exists(query, ItemcfProduct.class, Constant.MONGODB_ITEMCF_COLLECTION)){
             return null;
         }
         ItemcfProduct itemcfProduct = mongoTemplate.findOne(query, ItemcfProduct.class, Constant.MONGODB_ITEMCF_COLLECTION);
         List<Integer> res = new ArrayList<>();
-        for(ProductScore productScore : itemcfProduct.getRecs()){
-            res.add(productScore.getProductId());
+        if(itemcfProduct != null){
+            for(ProductScore productScore : itemcfProduct.getRecs()){
+                res.add(productScore.getProductId());
+            }
         }
+
         return res;
 //        List<Integer> res = new ArrayList<>();
 //        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
@@ -199,14 +208,18 @@ public class RecommendServiceImpl implements RecommendService {
         List<Integer> contentProducts = getContentBasedProductRecs(productId);
         // 基于物品协同推荐的列表
         List<Integer> itemcfProducts = getItemcfProductRecs(productId);
-        for(Integer productid:contentProducts){
-            if(!allProducts.contains(productid)){
-                allProducts.add(productid);
+        if(contentProducts != null){
+            for(Integer productid:contentProducts){
+                if(!allProducts.contains(productid)){
+                    allProducts.add(productid);
+                }
             }
         }
-        for(Integer productid:itemcfProducts){
-            if(!allProducts.contains(productid)){
-                allProducts.add(productid);
+        if(itemcfProducts != null){
+            for(Integer productid:itemcfProducts){
+                if(!allProducts.contains(productid)){
+                    allProducts.add(productid);
+                }
             }
         }
         // 某一页所需的推荐
@@ -241,8 +254,12 @@ public class RecommendServiceImpl implements RecommendService {
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId));
         StreamRecsProduct streamRecsProduct =  mongoTemplate.findOne(query, StreamRecsProduct.class, Constant.MONGODB_STREAM_RECS_COLLECTION);
+        List<ProductScore> scores = new ArrayList<>();
         // 离线推荐结果集和
-        List<ProductScore> scores = streamRecsProduct.getRecs();
+        if(streamRecsProduct != null){
+            scores = streamRecsProduct.getRecs();
+        }
+
 //        Jedis jedis = new Jedis(Constant.REDIS_HOST, Constant.REDIS_PORT);
 //        jedis.auth(Constant.REDIS_PASSWORD);
 //        String redisKey = "StreamRecs:" + userId;
